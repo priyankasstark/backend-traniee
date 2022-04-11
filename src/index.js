@@ -1,12 +1,17 @@
 const express = require('express');
 var bodyParser = require('body-parser');
-
+const { default: mongoose } = require('mongoose');
 const route = require('./routes/route.js');
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+mongoose.connect("mongodb+srv://AbiM-DB:5mi7p8PpLWYbYDAM@cluster0.qpomb.mongodb.net/AbiM-DB", 
+{useNewUrlParser: true})
+.then( () => console.log("MongoDb is connected"))
+.catch ( err => console.log(err) );
 
 app.use('/', route);
 
