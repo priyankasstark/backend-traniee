@@ -1,24 +1,20 @@
 const express = require('express');
-const BookModel = require('../models/bookModel');
-const BookController = require('../controllers/bookController');
+const controller = require('../controllers/controller');
 
 const router = express.Router();
 
 router.get('/test-me', function (req, res) {
-    res.send('Book Data API')
+    res.send('New Author-Book Data API')
 });
 
-router.post('/createBook',BookController.createBook);
+router.post('/newBook',controller.newBook);
 
-router.get('/bookList',BookController.bookList);
+router.post('/newAuthor',controller.newAuthor);
 
-router.get('/getBooksInYear',BookController.getBooksInYear);
+router.get('/listBookByAuthor',controller.listBookByAuthor);
 
-router.get('/getParticularBooks',BookController.getParticularBooks);
+router.post('/updateBookPrice',controller.updateBookPrice);
 
-router.get('/getXINRBooks',BookController.getXINRBooks);
-
-router.get('/getRandomBooks',BookController.getRandomBooks);
-
+router.get('/getBookByCost',controller.getBookByCost);
 
 module.exports = router;
