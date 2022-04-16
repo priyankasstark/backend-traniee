@@ -7,14 +7,12 @@ router.get('/test-me', function (req, res) {
     res.send('New Author-Book Data API')
 });
 
-router.post('/newBook',controller.newBook);
+router.post('/newBookP',controller.newBook);
 
-router.post('/newAuthor',controller.newAuthor);
+router.post('/newAuthorP',controller.newAuthor);
 
-router.get('/listBookByAuthor',controller.listBookByAuthor);
+router.post('/newPublisher',controller.newPublisher);
 
-router.post('/updateBookPrice',controller.updateBookPrice);
-
-router.get('/getBookByCost',controller.getBookByCost);
+router.get('/getBookDetailsP',controller.getBookDetails);
 
 module.exports = router;

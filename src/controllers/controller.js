@@ -1,54 +1,60 @@
-const BookModel = require("../models/bookModel");
+const BookModel = require('../models/bookModel');
 const AuthorModel = require('../models/authorModel');
+const PublisherModel = require('../models/publisherModel');
 
 
-const newBook = async function(req,res){
+const newBook = async function(req,res)
+{
     let data=req.body;
-    let newData=await BookModel.create(data);
-    res.send({msg : newData});
+    if(data.author)
+    {
+        let authorDet=await AuthorModel.findOne({_id : data.author});
+        if(authorDet==null)
+        {
+            res.send('Please enter a valid Author Id!');
+        }
+        else if(data.publisher)
+        {
+            let publisherDet=await PublisherModel.findOne({_id : data.publisher});
+            if(publisherDet==null)
+            {
+                res.send('Please enter a valid Publisher Id!');
+            }
+            else
+            {
+                let newData=await BookModel.create(data);
+                res.send({msg : newData});
+            }
+        }
+        else
+        {
+            res.send('Please Enter Publisher!');
+        }
+    }
+    else
+    {
+        res.send('Please Enter Author!');
+    }
 }
 
-const newAuthor = async function(req,res){
+const newAuthor = async function(req,res)
+{
     let data=req.body;
     let newData=await AuthorModel.create(data);
     res.send({msg : newData});
 }
 
-const listBookByAuthor = async function(req,res){
+const newPublisher = async function(req,res)
+{
     let data=req.body;
-    let id=await AuthorModel.findOne({authorName : data.authorName},{authorID : 1,_id : 0});
-    let result=await BookModel.find(id,{_id:0,__v:0,createdAt:0,updatedAt:0});
-    res.send({authorName : data.authorName,count : result.length,msg : result});
+    let newData=await PublisherModel.create(data);
+    res.send({msg : newData});
 }
 
-const updateBookPrice = async function(req,res){
-    let data=req.body;
-    let book=await BookModel.findOneAndUpdate(
-        {bookName : data.bookName},
-        {$set : {price : data.price}},
-        {new : true}
-    );
-    let author=await AuthorModel.findOne({authorID : book.authorID},{authorName : 1,_id : 0})
-    res.send({authorName : author.authorName,updatedPrice : book.price});
+const getBookDetails = async function(req,res)
+{
+    let result=await BookModel.find({},{_id:0,__v:0,createdAt:0,updatedAt:0}).populate(["author","publisher"]);
+    res.send({msg : result});
 }
 
-const getBookByCost = async function(req,res){
-    let books=await BookModel.find({price : {$gte : 50,$lte : 100}}).select({authorID : 1});
-    let authName=[];
-    for(let i=0,j=0;i<books.length;++i)
-    {
-        let auth=await AuthorModel.findOne({authorID : books[i].authorID});
-        if(books[i].authorID==auth.authorID)
-        {
-            authName[j]=auth.authorName;
-            ++j;
-        }
-    }
-    res.send({count : authName.length,msg : authName});
-}
-
-module.exports.newBook=newBook;
-module.exports.newAuthor=newAuthor;
-module.exports.listBookByAuthor=listBookByAuthor;
-module.exports.updateBookPrice=updateBookPrice;
-module.exports.getBookByCost=getBookByCost;
+module.exports = {newBook,newAuthor,newPublisher,getBookDetails};
