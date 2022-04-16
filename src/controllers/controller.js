@@ -57,4 +57,22 @@ const getBookDetails = async function(req,res)
     res.send({msg : result});
 }
 
-module.exports = {newBook,newAuthor,newPublisher,getBookDetails};
+const books = async function(req,res)
+{
+    let books=await BookModel.updateMany(
+        {publisher : {$in : ["625a811022ce6481baaa4684","625a81f322ce6481baaa468a"]}},
+        {$set : {isHardCover : true}}    
+        );
+    let authors=await AuthorModel.find({rating : {$gt : 3.5}},{_id : 1});
+    let result=[];
+    for(let i=0;i<authors.length;++i)
+    {
+        result[i]=await BookModel.updateMany(
+            {author : authors[i]._id},
+            {$inc : {price : 10}}
+        );
+    }
+    res.send({msg : result});
+}
+
+module.exports = {newBook,newAuthor,newPublisher,getBookDetails,books};

@@ -15,4 +15,6 @@ router.post('/newPublisher',controller.newPublisher);
 
 router.get('/getBookDetailsP',controller.getBookDetails);
 
+router.put('/books',controller.books);
+
 module.exports = router;
