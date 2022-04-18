@@ -1,18 +1,17 @@
 const DeveloperModel = require('../models/developerModel');
 const BatchModel = require('../models/batchModel');
-const { query } = require('express');
 
 const newBatch = async function(req,res)
 {
     let data=req.body;
-    newData=await BatchModel.create(data);
+    let newData=await BatchModel.create(data);
     res.send({msg : newData});
 }
 
 const newDeveloper = async function(req,res)
 {
     let data=req.body;
-    newData=await DeveloperModel.create(data);
+    let newData=await DeveloperModel.create(data);
     res.send({msg : newData});
 }
 
