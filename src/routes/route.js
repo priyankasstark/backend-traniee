@@ -4,17 +4,15 @@ const controller = require('../controllers/controller');
 const router = express.Router();
 
 router.get('/test-me', function (req, res) {
-    res.send('New Author-Book Data API')
+    res.send('Batch-Dev Data API')
 });
 
-router.post('/newBookP',controller.newBook);
+router.post('/batches',controller.newBatch);
 
-router.post('/newAuthorP',controller.newAuthor);
+router.post('/developers',controller.newDeveloper);
 
-router.post('/newPublisher',controller.newPublisher);
+router.get('/scholarship-developers',controller.eligibleDev);
 
-router.get('/getBookDetailsP',controller.getBookDetails);
-
-router.put('/books',controller.books);
+router.get('/developers',controller.getDevs);
 
 module.exports = router;

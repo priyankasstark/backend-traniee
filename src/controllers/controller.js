@@ -1,84 +1,32 @@
-const BookModel = require('../models/bookModel');
-const AuthorModel = require('../models/authorModel');
-const PublisherModel = require('../models/publisherModel');
+const DeveloperModel = require('../models/developerModel');
+const BatchModel = require('../models/batchModel');
+const { query } = require('express');
 
-
-const newBook = async function(req,res)
+const newBatch = async function(req,res)
 {
     let data=req.body;
-    if(data.author)
-    {
-        let authorDet=await AuthorModel.findById(data.author);
-        if(authorDet==null)
-        {
-            res.send('Please enter a valid Author Id!');
-        }
-        else if(data.publisher)
-        {
-            let publisherDet=await PublisherModel.findById(data.publisher);
-            if(publisherDet==null)
-            {
-                res.send('Please enter a valid Publisher Id!');
-            }
-            else
-            {
-                let newData=await BookModel.create(data);
-                res.send({msg : newData});
-            }
-        }
-        else
-        {
-            res.send('Please Enter Publisher!');
-        }
-    }
-    else
-    {
-        res.send('Please Enter Author!');
-    }
-}
-
-const newAuthor = async function(req,res)
-{
-    let data=req.body;
-    let newData=await AuthorModel.create(data);
+    newData=await BatchModel.create(data);
     res.send({msg : newData});
 }
 
-const newPublisher = async function(req,res)
+const newDeveloper = async function(req,res)
 {
     let data=req.body;
-    let newData=await PublisherModel.create(data);
+    newData=await DeveloperModel.create(data);
     res.send({msg : newData});
 }
 
-const getBookDetails = async function(req,res)
+const eligibleDev = async function(req,res)
 {
-    let result=await BookModel.find({},{_id:0,__v:0,createdAt:0,updatedAt:0}).populate(["author","publisher"]);
-    res.send({msg : result});
+    let devs=await DeveloperModel.find({percentage : {$gte : 70}, gender : 'female'}).populate('batch');
+    res.send({msg : devs});
 }
 
-const books = async function(req,res)
+const getDevs = async function(req,res)
 {
-    let publishers=await PublisherModel.find({name : {$in : ["Penguin Books","HarperCollins"]}},{_id : 1});
-    for(let i=0;i<publishers.length;++i)
-    {
-        let book=await BookModel.updateMany(
-            {publisher : publishers[i]._id},
-            {$set : {isHardCover : true}},
-            {new : true}    
-            );
-    }
-    let authors=await AuthorModel.find({rating : {$gt : 3.5}},{_id : 1});
-    let result=[];
-    for(let i=0;i<authors.length;++i)
-    {
-        result[i]=await BookModel.updateMany(
-            {author : authors[i]._id},
-            {$inc : {price : 10}},
-            {new : true}
-        );
-    }
-    res.send({msg : result});
-}
+    let batchId=await BatchModel.findOne({name : req.query.program},{_id : 1});
+    let devs=await DeveloperModel.find({percentage : {$gte : req.query.percentage}, batch : batchId._id}).populate('batch');
+    res.send({msg : devs});
+} 
 
-module.exports = {newBook,newAuthor,newPublisher,getBookDetails,books};
+module.exports = {newBatch,newDeveloper,eligibleDev,getDevs};
