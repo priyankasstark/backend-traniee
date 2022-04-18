@@ -8,14 +8,14 @@ const newBook = async function(req,res)
     let data=req.body;
     if(data.author)
     {
-        let authorDet=await AuthorModel.findOne({_id : data.author});
+        let authorDet=await AuthorModel.findById(data.author);
         if(authorDet==null)
         {
             res.send('Please enter a valid Author Id!');
         }
         else if(data.publisher)
         {
-            let publisherDet=await PublisherModel.findOne({_id : data.publisher});
+            let publisherDet=await PublisherModel.findById(data.publisher);
             if(publisherDet==null)
             {
                 res.send('Please enter a valid Publisher Id!');
@@ -59,17 +59,23 @@ const getBookDetails = async function(req,res)
 
 const books = async function(req,res)
 {
-    let books=await BookModel.updateMany(
-        {publisher : {$in : ["625a811022ce6481baaa4684","625a81f322ce6481baaa468a"]}},
-        {$set : {isHardCover : true}}    
-        );
+    let publishers=await PublisherModel.find({name : {$in : ["Penguin Books","HarperCollins"]}},{_id : 1});
+    for(let i=0;i<publishers.length;++i)
+    {
+        let book=await BookModel.updateMany(
+            {publisher : publishers[i]._id},
+            {$set : {isHardCover : true}},
+            {new : true}    
+            );
+    }
     let authors=await AuthorModel.find({rating : {$gt : 3.5}},{_id : 1});
     let result=[];
     for(let i=0;i<authors.length;++i)
     {
         result[i]=await BookModel.updateMany(
             {author : authors[i]._id},
-            {$inc : {price : 10}}
+            {$inc : {price : 10}},
+            {new : true}
         );
     }
     res.send({msg : result});
