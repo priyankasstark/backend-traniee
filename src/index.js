@@ -2,8 +2,7 @@ const express = require('express');
 var bodyParser = require('body-parser');
 const { default: mongoose } = require('mongoose');
 const route = require('./routes/route.js');
-const moment=require('moment');
-
+const moment = require('moment');
 const app = express();
 
 app.use(bodyParser.json());
