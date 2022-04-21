@@ -6,9 +6,8 @@ const tokenAuthenticator = function(req,res,next){
     {
         let token=reqHeaders["x-auth-token"];
         let decodedToken=jwt.verify(token,'SecretKey');
-        if(req.params.userId==decodedToken.emailId)
+        if(req.params.userId==decodedToken._id)
         {
-            req.userId=decodedToken._id;
             next();
         }
         else

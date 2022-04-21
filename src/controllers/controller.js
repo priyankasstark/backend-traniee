@@ -5,28 +5,21 @@ const newUser = async function(req,res)
 {
     let data=req.body;
     let newData=await UserModel.create(data);
-    res.send({msg : newData});
+    res.send({status : true,msg : newData});
 };
 
 const loginUser = async function(req,res)
 {
     let data=req.body;
-    let user=await UserModel.findOne({_id : req.userId,isDeleted : true});
-    if(user==null)
+    let user=await UserModel.findOne({emailId : data.emailId,password : data.password});
+    if(user!=null)
     {
-        res.send({status : false,msg : 'User does not exist!'});
+        let token=await jwt.sign({_id : user._id,emailId : user.emailId},'SecretKey');
+        res.send({status : true,msg : token});
     }
     else
     {
-        if(user.emailId!=data.emailId&&user.password!=data.password)
-        {
-            let token=await jwt.sign({_id : user._id,emailId : user.emailId},'SecretKey');
-            res.send({status : true,msg : token});
-        }
-        else
-        {
-            res.send({status : false,msg : 'Email ID or Password is Incorrect!'});   
-        }
+         res.send({status : false,msg : 'Email ID or Password is Incorrect!'});   
     }
 };
 
@@ -71,7 +64,7 @@ const deleteUser = async function(req,res)
     }    
     else
     {
-        res.send({status : true,msg : 'User deleted successfully!'});
+        res.send({status : true,msg : 'User has been deleted successfully!'});
     }
 }
 
