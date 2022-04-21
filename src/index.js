@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-mongoose.connect("mongodb+srv://AbiM-DB:BGucCQmqenRiwUXT@cluster0.w5bka.mongodb.net/AbiM-DB", 
+mongoose.connect("mongodb+srv://AbiM-DB:BGucCQmqenRiwUXT@cluster0.w5bka.mongodb.net/Token-Authentication", 
 {useNewUrlParser: true})
 .then( () => console.log("MongoDb is connected"))
 .catch ( err => console.log(err) );

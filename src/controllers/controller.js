@@ -1,67 +1,78 @@
-const ProductModel = require('../models/productModel');
-const OrderModel = require('../models/orderModel');
 const UserModel = require('../models/userModel');
-
-const newProduct = async function(req,res)
-{
-    let data=req.body;
-    let newData=await ProductModel.create(data);
-    res.send({msg : newData});
-}
+const jwt = require('jsonwebtoken');
 
 const newUser = async function(req,res)
 {
     let data=req.body;
-    data['isFreeAppUser']=req.headers.isfreeappuser;
     let newData=await UserModel.create(data);
     res.send({msg : newData});
-}
+};
 
-const newOrder = async function(req,res)
+const loginUser = async function(req,res)
 {
     let data=req.body;
-    let user=await UserModel.findById(data.userId);
-    if(user)
+    let user=await UserModel.findOne({_id : req.userId,isDeleted : true});
+    if(user==null)
     {
-        let product=await ProductModel.findById(data.productId);
-        if(product)
+        res.send({status : false,msg : 'User does not exist!'});
+    }
+    else
+    {
+        if(user.emailId!=data.emailId&&user.password!=data.password)
         {
-            if(req.headers.isfreeappuser=='true')
-            {
-                data['amount']=0;
-                data['isFreeAppUser']=req.headers.isfreeappuser;
-                let newData=await OrderModel.create(data);
-                res.send({msg : newData});
-            }
-            else
-            {
-                if(user.balance>=product.price)
-                {
-                    await UserModel.findOneAndUpdate(
-                        {_id : data.userId},
-                        {$set : {balance : user.balance-product.price}}
-                    );
-                    data['amount']=product.price;
-                    data['isFreeAppUser']=req.headers.isfreeappuser;
-                    let newData=await OrderModel.create(data);
-                    res.send({msg : newData});
-                }
-                else
-                {
-                    res.send("Insufficient Balance!")
-                }
-            }
+            let token=await jwt.sign({_id : user._id,emailId : user.emailId},'SecretKey');
+            res.send({status : true,msg : token});
         }
         else
         {
-            res.send('Invalid ProductID!');
+            res.send({status : false,msg : 'Email ID or Password is Incorrect!'});   
         }
-        
-    } 
+    }
+};
+
+const getUserDetails = async function(req,res)
+{
+    let id=req.params.userId;
+    let user=await UserModel.findOne({_id : id,isDeleted : false});
+    if(user==null)
+    {
+        res.send({status : false,msg : 'User does not exist!'});
+    
+    }    
     else
     {
-        res.send('Invalid UserID!');
+        res.send({status : true,msg : user});
+    }
+};
+
+const updateUserDetails = async function(req,res)
+{
+    let id=req.params.userId;
+    let data=req.body;
+    let user=await UserModel.findOneAndUpdate({_id : id,isDeleted : false},data,{new : true});
+    if(user==null)
+    {
+        res.send({status : false,msg : 'User does not exist!'});
+    }
+    else
+    {
+        res.send({status : true,msg : user});
+    }
+};
+
+const deleteUser = async function(req,res)
+{
+    let id=req.params.userId;
+    let user=await UserModel.findOneAndUpdate({_id : id,isDeleted : false},{isDeleted : true});
+    if(user==null)
+    {
+        res.send({status : false,msg : 'User does not exist!'});
+    
+    }    
+    else
+    {
+        res.send({status : true,msg : 'User deleted successfully!'});
     }
 }
 
-module.exports={newUser,newProduct,newOrder};
+module.exports={newUser,loginUser,getUserDetails,updateUserDetails,deleteUser};
