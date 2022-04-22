@@ -4,15 +4,22 @@ const tokenAuthenticator = function(req,res,next){
     let reqHeaders=req.headers;
     if(reqHeaders["x-auth-token"])
     {
-        let token=reqHeaders["x-auth-token"];
-        let decodedToken=jwt.verify(token,'SecretKey');
-        if(req.params.userId==decodedToken._id)
-        {
-            next();
+        try
+        {    
+            let token=reqHeaders["x-auth-token"];
+            let decodedToken=jwt.verify(token,'SecretKey');
+            if(req.params.userId==decodedToken._id)
+            {
+                next();
+            }
+            else
+            {
+                res.send({status : false,msg : 'Access Denied!'});
+            }
         }
-        else
+        catch(err)
         {
-            res.send({status : false,msg : 'Invalid Token!'});
+            res.send({status : false,msg : err.message});
         }
     }
     else
