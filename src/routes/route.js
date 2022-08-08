@@ -1,88 +1,75 @@
-router.get('/students', function (req, res){
-    let students = ['Sabiha', 'Neha', 'Akash']
-    res.send(students)
+const express = require('express');
+const abc = require('../introduction/intro')
+const router = express.Router();
+const welcome = require('../logger/logger')
+const dateMonthInfo = require('../util/helper')
+const formatter =require('../validator/formatter')
+let lodash =require('lodash')
+
+
+
+router.get('/test-me', function (req, res) {
+    // console.log('My batch is', abc.name)
+    // abc.printName()
+    res.send('My second ever api!')
+    welcome.welcome()
+    console.log("")
+    dateMonthInfo.printDate()
+    dateMonthInfo.printMonth()
+    dateMonthInfo.getBachInfo()
+    console.log("")
+    formatter.ts()
+    let array =['january','february','march','april','may','june','july','august','september','octomber','november','december']
+    let result1 =lodash.chunk(array,3)
+    console.log(result1)
+    //next 
+    let arr2=[3,5,7,9,11,13,15,17,19,21]
+    let result2 = lodash.tail(arr2,9)
+    console.log(result2)
+    //next 
+    let arr3=[1,1,2,2,3]
+    let result3 = lodash.union(arr3)
+    console.log(result3)
+    //next 
+    let arr4 = [["horror","TheShining"],["drama","Titanic"],["fantasy","PansLabyrinth"]];
+    let result4 = {}
+    result4= lodash.fromPairs(arr4,1)
+    console.log(result4)
+
+});
+
+
+router.get('/test-you', function(req, res){
+    res.send('This is the second routes implementation')
 })
 
-router.get('/student-details/:name', function(req, res){
-    /*
-    params is an attribute inside request that contains 
-    dynamic values.
-    This value comes from the request url in the form of an 
-    object where key is the variable defined in code 
-    and value is what is sent in the request
-    */
+// router.get('/give-me-students-data',function(req, res){
 
-    let requestParams = req.params
+// })
+// module.exports = router;
+// // adding this comment for no reason
+// const express = require('express');
+// const abc = require('../introduction/intro')
+// const router = express.Router();
 
-    // JSON strigify function helps to print an entire object
-    // We can use any ways to print an object in Javascript, JSON stringify is one of them
-    console.log("This is the request "+ JSON.stringify(req.Params))
-    let studentName = requestParams.name
-    console.log('Name of the student is ', studentName)
-    let studentDetail = studentName + "" + studentName
-    res.send(studentDetail)
-})
-/////////////////////////////////////////////////////////////////////
-//1st//
-router.get('/get-movies',function(req, res){ //student detail api he 
-    let movies1= ['ENDGAME','THE JUDGE','RESTORATION','SHERLOCK HOLMES']//api is implementation is used to send response for request
-    res.send(movies1)//movies wala iske jese krna he
-})
+router.get('/test-me', function (req, res) {
+    // console.log('My batch is', abc.name)
+    // abc.printName()
+    // logger.welcome()
 
-//////////////////////////////////////////////////////////////////////
-//// 2nd/////
+    res.send('My second ever api!')
+});
 
-router.get('/get-movie/:indexNumber',function(req, res){ //student detail api he 
-    
-    let movies=[' ENDGAME ','THE JUDGE','RESTORATION','SHERLOCK HOLMES']
-    let index = req.params.indexNumber;
-    console.log(movies[index])
-     res.send(movies[index])
+
+
+
+
+router.get('/test-you', function(req, res){
+    res.send('This is the second routes implementation')
 })
 
-/////////////////////////////////////////////////////////////
-///////    3rd //////////////////////////////////////
-router.get('/get-moviess/:indexNumber',function(req, res){ //student detail api he 
-    
-    let moviesName=['ENDGAME','THE JUDGE','RESTORATION','SHERLOCK HOLMES']
-    let index = req.params.indexNumber;
+router.get('/give-me-students-data',function(req, res){
 
-     if(index > moviesName.length){
-        return res.send("use a valid index  ")
-     }else{
-    
-     res.send(moviesName[index])
-     }
 })
-
-////////////////////////////////////////////////////////////
-///////////// 4th ////////////////////
-//forth wala idhar he
-router.get('/get-/films',function(req, res){ //student detail api he    
-
-    let moviesName=[ {"id": 1,"name": "ENDGAME"}, 
- {"id": 2,"name": "THE JUDGE"}, 
- {"id": 3,"name": "RESTORATION"},
-  {"id": 4,"name": "SHERLOCK HOLMES"}]
-    res.send(moviesName)
-})
-
-//////////////////////////////////////////////////
-////////////// 5th /////////////////////////////////
-router.get('/get-/films/:indexNumber',function(req, res){ //student detail api he    
-
-    let moviesName=[ {"id": 1,"name": "INFINITY WAR"}, 
- {"id": 2,"name": "ENDGAME"}, 
- {"id": 3,"name": "THE JUDGE"},
-  {"id": 4,"name": "SHERLOCK HOLMES"}]
-    let index = req.params.indexNumber;
-     if(index > moviesName.length){
-        return res.send("no movie exist with this id ")
-     }else{
-     res.send(moviesName[index])
-     }
-})
-
-
-
 module.exports = router;
+// adding this comment for no reason
