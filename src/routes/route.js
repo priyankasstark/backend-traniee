@@ -1,3 +1,18 @@
+const express = require('express');
+const myHelper = require('../util/helper')
+const underscore = require('underscore')
+
+const router = express.Router();
+
+router.get('/test-me', function (req, res) {
+    myHelper.printDate()
+    myHelper.getCurrentMonth()
+    myHelper.getCohortData()
+    let firstElement = underscore.first(['Sabiha','Akash','Pritesh'])
+    console.log('The first element received from underscope function is '+firstElement)
+    res.send('My first ever api!')
+});
+
 router.get('/students', function (req, res){
     let students = ['Sabiha', 'Neha', 'Akash']
     res.send(students)
@@ -24,41 +39,50 @@ router.get('/student-details/:name', function(req, res){
 })
 /////////////////////////////////////////////////////////////////////
 //1st//
-router.get('/get-movies',function(req, res){ //student detail api he 
-    let movies1= ['ENDGAME','THE JUDGE','RESTORATION','SHERLOCK HOLMES']//api is implementation is used to send response for request
-    res.send(movies1)//movies wala iske jese krna he
+router.get('/GET/movies',function(req, res){ //student detail api he 
+    let movies= ['ENDGAME','THE JUDGE','RESTORATION','SHERLOCK HOLMES']//api is implementation is used to send response for request
+    res.send(movies)//movies wala iske jese krna he
 })
 
 //////////////////////////////////////////////////////////////////////
 //// 2nd/////
 
-router.get('/get-movie/:indexNumber',function(req, res){ //student detail api he 
+router.get('/GET/movies/:indexNumber',function(req, res){ //student detail api he 
     
-    let movies=[' ENDGAME ','THE JUDGE','RESTORATION','SHERLOCK HOLMES']
-    let index = req.params.indexNumber;
-    console.log(movies[index])
-     res.send(movies[index])
+    const movies=[' ENDGAME ','THE JUDGE','RESTORATION','SHERLOCK HOLMES']
+    let reqParams=req.params;
+    let index=reqParams.indexNumber;
+    if(index>=0 && index<=movies.length-1){
+        res.send(movies[index])
+    }else{
+        res.send("Wrong index");
+    }
+
 })
+
 
 /////////////////////////////////////////////////////////////
 ///////    3rd //////////////////////////////////////
-router.get('/get-moviess/:indexNumber',function(req, res){ //student detail api he 
+router.get('/movies/:indexNumber', function (req, res){ //student detail api he 
     
-    let moviesName=['ENDGAME','THE JUDGE','RESTORATION','SHERLOCK HOLMES']
+    let movies=['ENDGAME','THE JUDGE','RESTORATION','SHERLOCK HOLMES']
     let index = req.params.indexNumber;
+    if (index < 4) {
+        res.send(movies[index]);
+        console.log(movies[index])
+    } else {
+        res.send("use a valid index");
+        console.log("use a valid index")
+    }
 
-     if(index > moviesName.length){
-        return res.send("use a valid index  ")
-     }else{
-    
-     res.send(moviesName[index])
-     }
+
 })
+
 
 ////////////////////////////////////////////////////////////
 ///////////// 4th ////////////////////
 //forth wala idhar he
-router.get('/get-/films',function(req, res){ //student detail api he    
+router.get('/GET/films',function(req,res){ //student detail api he    
 
     let moviesName=[ {"id": 1,"name": "ENDGAME"}, 
  {"id": 2,"name": "THE JUDGE"}, 
@@ -69,20 +93,22 @@ router.get('/get-/films',function(req, res){ //student detail api he
 
 //////////////////////////////////////////////////
 ////////////// 5th /////////////////////////////////
-router.get('/get-/films/:indexNumber',function(req, res){ //student detail api he    
+router.get('/films/:indexNumber', function (req, res) { //student detail api he    
 
-    let moviesName=[ {"id": 1,"name": "INFINITY WAR"}, 
+    let movies=[ {"id": 1,"name": "INFINITY WAR"}, 
  {"id": 2,"name": "ENDGAME"}, 
  {"id": 3,"name": "THE JUDGE"},
   {"id": 4,"name": "SHERLOCK HOLMES"}]
-    let index = req.params.indexNumber;
-     if(index > moviesName.length){
-        return res.send("no movie exist with this id ")
-     }else{
-     res.send(moviesName[index])
-     }
+  let index = req.params.indexNumber;
+  if (index > movies.length) {
+      return res.send("no movie exist with this id")
+  } else {
+      res.send(movies[index])
+  }
 })
 
 
 
+
 module.exports = router;
+
