@@ -103,5 +103,49 @@ router.get("/films/:filmId", function(req, res){
        res.send("The film id doesn't match any movie")
 })
 
+router.get("/sol1", function (req, res) {
+    //logic : sum of numbers is n(n+1)/2..so get sum of all numbers in array. now take sum of numbers till last digit in the array
+    let arr = [1, 2, 3, 5, 6, 7]
+    //find the missing no.
+
+    let n = arr.length + 1
+    let total = (n * (n + 1)) / 2
+    let sum = 0
+    for (let i = 0; i < arr.length; i++) {
+        sum = sum + arr[i]
+    }
+    console.log(sum);
+    console.log(total);
+    console.log("the missing no. is ", total - sum);
+    let missingNumber = total - sum
+    res.send ({ data: missingNumber });
+});
+
+router.get("/sol2", function (req, res) {
+
+    const arr = [33, 34, 35, 37, 38]
+    let start = arr[0]
+    const arr1 = []
+
+    for (let i = 0; i <= arr.length; i++) {
+        arr1[i] = start
+        start++
+    }
+
+    console.log(arr1);
+
+    for (let i = 0; i <= arr.length; i++) {
+        if (arr[i] !== arr1[i]) {
+            console.log(arr1[i])
+            res.send(  { data: arr1[i]  }  );
+            return
+        }
+
+    }
+    
+
+});
+
+
 module.exports = router;
 // adding this comment for no reason
