@@ -101,14 +101,19 @@ let players =
     },
   ]
 
-
-
-router.post('/players', function (req, res) {
-
-  //LOGIC WILL COME HERE
-  let newtheplayer = req.body.player
-  players.push(newtheplayer)
-  res.send({ data: players , status: true })
-})
-
+  router.post('/players', function (req, res) {
+    //LOGIC WILL COME HERE
+    let newplayer = req.body.player
+    let n = newplayer.name
+  
+    for (i = 0; i < players.length; i++) {
+      if (players[i].name == n) {
+        return res.send("Sorry, This name is already exist!")
+      }
+    }
+    players.push(newplayer)
+    res.send({players})
+  
+  })
+  
 module.exports = router;
