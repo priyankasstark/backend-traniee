@@ -70,50 +70,158 @@ router.post("/test-post-4", function(req, res) {
     res.send(  { msg: arr , status: true }  )
 })
 
-let players =
-  [
-    {
-      "name": "manish",
-      "dob": "1/1/1995",
-      "gender": "male",
-      "city": "jalandhar",
-      "sports": [
-        "swimming"
-      ]
-    },
-    {
-      "name": "gopal",
-      "dob": "1/09/1995",
-      "gender": "male",
-      "city": "delhi",
-      "sports": [
-        "soccer"
-      ],
-    },
-    {
-      "name": "lokesh",
-      "dob": "1/1/1990",
-      "gender": "male",
-      "city": "mumbai",
-      "sports": [
-        "soccer"
-      ],
-    },
-  ]
+// let players =
+//   [
+//     {
+//       "name": "manish",
+//       "dob": "1/1/1995",
+//       "gender": "male",
+//       "city": "jalandhar",
+//       "sports": [
+//         "swimming"
+//       ]
+//     },
+//     {
+//       "name": "gopal",
+//       "dob": "1/09/1995",
+//       "gender": "male",
+//       "city": "delhi",
+//       "sports": [
+//         "soccer"
+//       ],
+//     },
+//     {
+//       "name": "lokesh",
+//       "dob": "1/1/1990",
+//       "gender": "male",
+//       "city": "mumbai",
+//       "sports": [
+//         "soccer"
+//       ],
+//     },
+//   ]
 
-  router.post('/players', function (req, res) {
-    //LOGIC WILL COME HERE
-    let newplayer = req.body.player
-    let n = newplayer.name
+//   router.post('/players', function (req, res) {
+//     //LOGIC WILL COME HERE
+//     let newplayer = req.body.player
+//     let n = newplayer.name
   
-    for (i = 0; i < players.length; i++) {
-      if (players[i].name == n) {
-        return res.send("Sorry, This name is already exist!")
-      }
+//     for (i = 0; i < players.length; i++) {
+//       if (players[i].name == n) {
+//         return res.send("Sorry, This name is already exist!")
+//       }
+//     }
+//     players.push(newplayer)
+//     res.send({players})
+  
+//   })
+
+  
+
+
+let players =
+   [
+       {
+           name: "manish",
+           dob: "1/1/1995",
+           gender: "male",
+           city: "jalandhar",
+           sports: ["swimming"],
+           bookings: [
+               {
+                   bookingNumber: 1,
+                   sportId: "",
+                   centerId: "",
+                   type: "private",
+                   slot: '1234000000',
+                   bookedOn: '31/08/2021',
+                   bookedFor: '01/09/2021'
+               },
+               {
+                   bookingNumber: 2,
+                   sportId: "",
+                   centerId: "",
+                   type: "private",
+                   slot: '12456000000',
+                   bookedOn: '31/08/2001',
+                   bookedFor: '01/09/2001'
+               },
+           ]},
+       {
+           name: "gopal",
+           dob: "1/09/1995",
+           gender: "male",
+           city: "delhi",
+           sports: ["soccer"],
+           bookings: []
+       },
+       {
+           name: "lokesh",
+           dob: "1/1/1990",
+           gender: "male",
+           city: "mumbai",
+           sports: ["soccer"],
+           bookings: [
+       
+            {
+                bookingNumber: 4,
+                sportId: "",
+                centerId: "",
+                type: "private",
+                slot: '131245000000',
+                bookedOn: '31/08/2020',
+                bookedFor: '01/09/2020'
+            }
+        ]
+       }
+   ]
+
+//   
+
+router.post('/player/:playerName/booking/:bookingId',function (request, response){
+    const playerName = request.params.playerName;
+    const bookingId = request.params.bookingId;
+    const bookingData = request.body;
+    bookingData.bookingNumber = Number(bookingId);
+    
+    let playerNameStatus = "", bookingIdStatus = "";
+    
+    for(let i = 0; i < players.length; i++){
+    if(players[i].name == playerName){
+    playerNameStatus = i;
+    break;
     }
-    players.push(newplayer)
-    res.send({players})
+    else{
+    playerNameStatus = null;
+    }
+    }
+    if(playerNameStatus != null){
+    if(players[playerNameStatus].bookings.length == 0){
+    bookingIdStatus = players[playerNameStatus].bookings;
+    }
+    else{
+    for(let i = 0; i < players[playerNameStatus].bookings.length; i++){
+    if(players[playerNameStatus].bookings[i].bookingNumber == bookingId){
+    bookingIdStatus = null;
+    break;
+    }
+    else{
+    bookingIdStatus = players[playerNameStatus].bookings;
+    }
+    }
+    }
+    if(bookingIdStatus != null){
+    bookingIdStatus.push(bookingData);
+    response.send(players);
+    }
+    else{
+    response.send("Booking number already exist !");
+    }
+    }
+    else{
+    response.send("Player name not found !");
+    }
+    });
+
   
-  })
-  
-module.exports = router;
+   module.exports = router;
