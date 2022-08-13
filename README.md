@@ -1,7 +1,7 @@
-#Plutonium
+#𝑷𝒍𝒖𝒕𝒐𝒏𝒊𝒖𝒎
 
-Backend cohort july 2022 - nov 2022
+𝑩𝑨𝑪𝑲𝑬𝑵𝑫 𝑪𝑶𝑯𝑶𝑹𝑻 𝑱𝑼𝑳𝒀 2022 - 𝑵𝑶𝑽 2022
 
-assignment 1:- https://docs.google.com/document/d/1twjtV7kUhG1Ofq27fO2neeeNvNeIkSnM1c2x6pIVDUo/preview?pli=1&pru=AAABgqsxrT0*IZ0zWu1QZb0y9eUGTjcbcw
+𝑨𝑺𝑺𝑰𝑮𝑵𝑴𝑬𝑵𝑻 1:-:- https://docs.google.com/document/d/1twjtV7kUhG1Ofq27fO2neeeNvNeIkSnM1c2x6pIVDUo/preview?pli=1&pru=AAABgqsxrT0*IZ0zWu1QZb0y9eUGTjcbcw
 
-assignment 2:- https://drive.google.com/file/d/1gq4ncdmhqAqlc4xwDBX3yiwj9JgRD0rO/view?usp=sharing
+𝑨𝑺𝑺𝑰𝑮𝑵𝑴𝑬𝑵𝑻 2:- https://drive.google.com/file/d/1gq4ncdmhqAqlc4xwDBX3yiwj9JgRD0rO/view?usp=sharing
