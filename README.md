@@ -1,5 +1,5 @@
 # Plutonium
-Backend cohort Feb 2022 - May 2022
+Backend cohort july 2022 - nov 2022
 
 
 # Assignment
