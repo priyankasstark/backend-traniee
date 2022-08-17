@@ -37,7 +37,7 @@ const booksData= async function (req, res) {
     
         res.send({ msg: INRBooks });
     };
-    
+   
 
     const getRandomBooks = async function(req , res){
         let randomBooks = await bookModel.find({$or : [ { totalpages :{$gt : 500 }}, {stockAvailable : true }]})
