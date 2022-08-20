@@ -4,13 +4,11 @@ const bookModel= require("../models/newbookModel")
 const publisherModel= require("../models/newpublisherModel")
 
 
-/////////////////////////3rd wala////////////////////////////////////
 const createBook= async function (req, res) {
     let book = req.body
     let authorId = req.body.author_id
     let publisherId = req.body.publisher_id
-
-////////////////////////////for author/////////////////////////////////////////////////////    
+   
     if(!authorId){
         return res.send({ msg : "author id is required"})
     }
@@ -18,8 +16,7 @@ const createBook= async function (req, res) {
     let author_id = await authorModel.findById(authorId)
     if(!author_id){
         return res.send({ msg :'No author is present with the given id'})
-    }
-/////////////////////////////for publisher//////////////////////////////////////////////////    
+    }   
     if(!publisherId){
         return res.send({ msg :'publisher id is required'})
     }
