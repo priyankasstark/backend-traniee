@@ -46,7 +46,7 @@ const updating = async function( req, res){
 
 //5b 
 const priceUpdate = async function( req, res) {
-  let add = await bookModel.updateMany({"ratings" :{$gt : 3.5}}, {$inc :{$set:{ "price" : +10} }},{new : true})
+  let add = await bookModel.updateMany({"ratings" :{$gt : 3.5}}, {$inc :{ "price" : +10} },{new : true})
   res.send( add )
 }
 
