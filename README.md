@@ -1,77 +1,78 @@
-# Next() :
-- it is a callback function in a middleware
-- it passses the control to the subsequent function
-- if next () is missed, the control flow will hang
+# TOPIC: Middleware2
 
-<!-- TYPES OF MIDDLEWARE: -->
-# Route based Middlewares
-# Global Middlewares
+## Request
+- Access headers
+- Set headers
+- Set attributes
 
-<!-- WHY Middleware -->
-- manages the flow of control
-- code reusability esp for restrivted routes
+## Response 
+- Set headers
+- Get headers
 
-<!-- WHAT -->
-- sit between your router and your HANDLER
+## Assignment
 
-<!-- e.g. -->
-router.post('/getHomePage' , MiddlewareIfLoggedIn,  UserController.homePage)
- 
-function MiddlewareIfLoggedIn( req, res, next) {
-    if loggedIn then call the next fucntion/handler which will give us the home page feeds
-    else res.send( " please login or register")
- }
+TOPIC: Middleware2
+
+- For this assignment you have to create a new branch - assignment/middleware2
+- Your user document should look like this
+```
+{ 
+    _id: ObjectId("61951bfa4d9fe0d34da86829"),
+    name: "Sabiha Khan",
+	balance:100, // Default balance at user registration is 100
+	address:"New delhi",
+	age: 90,
+ 	gender: “female” // Allowed values are - “male”, “female”, “other”
+	isFreeAppUser: false // Default false value.
+}
+```
+
+- Your product document should look like this
+```
+{
+	_id: ObjectId("61951bfa4d9fe0d34da86344"),
+	name:"Catcher in the Rye",
+	category:"book",
+	price:70 //mandatory property
+}
+```
+
+Your Order document looks like this.
+```
+{
+	_id: ObjectId("61951bfa4d9fe0d34da86344"),
+	userId: “61951bfa4d9fe0d34da86829”,
+	productId: “61951bfa4d9fe0d34da86344”
+	amount: 0,
+	isFreeAppUser: true, 
+	date: “22/11/2021”
+}
+```
 
 
-<!--  e.g. restricted and open-to-all API's can be handled like below now: -->
-# restricted API's
- router.get('/homePage', mid1, UserController.feeds)
- router.get('/profileDetails', mid1, UserController.profileDetails)
- router.get('/friendList', mid1, UserController.friendList)
- router.get('/changePassword', mid1, UserController.changePassword)
+NOTE: In some of the below apis a header validation is to be performed (create user and create order). The name of the header is ‘isFreeAppUser’. Write a header validation that simply checks whether this header is present or not. Please note this validation should only be called in create user and create order apis. Perform this validation in a middleware.
 
-# OPen-to-all API's
- router.get('/termsAndConditions',  UserController.termsAndConditions)
- router.get('/register',  UserController.register)
+- Write a POST api to create a product from the product details in request body. 
+- Write a POST api to create a user that takes user details from the request body. If the header **isFreeAppUser** is not present terminate the request response cycle with an error message that the request is missing a mandatory header
+- Write a POST api for order purchase that takes a userId and a productId in request body. 
+If the header isFreeAppUser is not present terminate the request response cycle with an error message that the request is missing a mandatory header
+If the header is present the control goes to the request handler. Perform the user and product validation. Check if the user exists as well as whether the product exists. Return an error with a suitable error message if either of these validations fail
+For every purchase we save an order document in the orders collection. isFreeAppUser property in an Order document depends on the header **isFreeAppUser**. If the **isFreeAppUser** header is true then the balance of the user is not deducted and the amount in order is set to 0 as well the attribute in order **isFreeAppUser** is set to true. If this header has a false value then the product’s price is checked. This value is deducted from the user’s balance and the order amount is set to the product’s price as well as the attrbiute **isFreeAppUser** is set to false in order document.
+- Update the logic in middleware to set the **isFreeAppUser** attribute in req. Use this attribute in the route handler for setting the isFreeAppUser attributes of User and Order collection. 
 
+### Hints for problem 3
 
-<!-- GLOBAL MW -->
-app.use( midGlobal)
+1. Validate the header in a middleware. Terminate the req-res cycle if this fails.
+2. Validate the userId. Send error if userId is invalid
+3. Validate the productId. Send the error if productId is invalid
+4. Now write the logic for order creation. 3 scenarios
+//Scenario 1
+For paid user app and the user has sufficient balance. We deduct the balance from user's balance and update the user. We create an order document
 
-# body-parser functions:
-- getting the post data in req.body
-- getting the req.body data as JSON 
-- providing the header data in req.header
-etc etc
+//Scenaio 2
+For paid app user and the user has insufficient balance. We send an error that the user doesn't have enough balance
 
-<!-- JWT BASIC INTRO OF FLOW -->
-<!-- // LOGIN FLOW -->
-
-you punch your userName and password 
-if correct you get loggedIn...
+//Scenario 3
+For free app user, we dont check user's balance and create the order with 0 amount.
 
 
-<!-- WITHOUT JWT: -->
-next time you call an api to get your FB friendList..FB should ask you for a login again ( BUT this does not happen in real life)
-
-after 30 mins..you try to access your profile page..ideally FB should ask you to login again..BUT this does not happen in real life
-
-<!-- WITH JWT -->
-you punch your userName and password ..FB will craete a unique secret token( unique to every user) and send it to the browser..Chrome will save this token in its storage
-next time I want to acess my friendList..chrome(frontend) will send this token ( already stored in chrome storage) to the API..this API will first call a Middleware which will verify if the token is correct and who does it belong to..if token is correct then we will send the friend list of the concerned person..else send not authorised
-
-next time when you request your profile page..token is checked ..if correct you get your profile page, else "not authorised"
-
-intro
-
-<!-- ASSIGNMENT:- -->
-Write a middleware that logs (console.log) some data everytime any API is hit
-Data to be logged:-the current timestamp(as date time) , the IP of the user and the route being requested).
-For this first figure out how to get the route location being requested, how to get current timestamp and how to get the IP.
-NOTE: ip of local computer will come as ::1 so dont get disturbed by seeing this)
-
-e.g: you should be logging something like this on each line:
-time , IP, Route should be printed on each line in terminal( every time an api is hit)
-2010-08-19 14:00:00 , 123.459.898.734 , /createUser
-2010-08-19 14:00:00 , 123.459.898.734 , /basicAPi
-2010-08-19 14:00:00 , 123.459.898.734 , /falanaAPI
