@@ -46,3 +46,9 @@ If present, check that the token is valid.
 - Write a **DELETE api /users/:userId** that takes the userId in the path params and marks the isDeleted attribute for a user as true. Check that request must contain **x-auth-token** header. If absent, return a suitable error.
 - Once, all the apis are working fine, move the authentication related code in a middleware called auth.js
 - Add this middleware at route level in the routes where applicable.
+
+
++ Please note that you have to also write the logic for authorisation now so that a logged in user can modify or fetch ONLY their own data.
++ You have to implement authorisation for fetch user details, update user and delete user apis
++ Run this code and ensure the authorisation works fine for all the apis before following the next requirement
++ You now have to move this similar code in all the three apis in a suitable middleware
