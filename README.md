@@ -11,7 +11,8 @@ On a way to be a Full stack developer/Sde traniee and I'm very passionate about 
 * 🧠  I'm learning Backend Development
 * 🤝  I'm open to collaborating on Interesting and challenging projects
 * ⚡  I love to watch movies and especially Sci-Fi genre
-<img src="https://cdn.glitch.com/0e4d1ff3-5897-47c5-9711-d026c01539b8%2Fbddfd6e4434f42662b009295c9bab86e.gif?v=1573157191712" alt="this slowpoke moves" align="center"  width="250"  alt="404 image"/>
+<img align="right" alt="Coding" width="400" src="https://cdn.dribbble.com/users/1162077/screenshots/3848914/programmer.gif">
+
 <p align="left"> <a href="https://github.com/ryo-ma/github-profile-trophy"><img src="https://github-profile-trophy.vercel.app/?username=priyankasstark" alt="priyankasstark" /></a> </p>
 
 - 🌱 I’m currently learning **Backend & Frontend Developer || Node.js || angular.js || Express.js || CSS || HTML || JavaScript || MongoDB || Full-Stack Developer|| MERN || GIT || GITHUB || GIT-BASH || DSA || DBMS**
