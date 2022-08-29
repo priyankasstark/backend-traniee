@@ -3,7 +3,7 @@ Hi <img src="https://raw.githubusercontent.com/ABSphreak/ABSphreak/master/gifs/H
 <img align="right" alt="Coding" width="400" src="https://cdn.dribbble.com/users/1162077/screenshots/3848914/programmer.gif">
 ===========================
 
-Traniee at FunctionUp
+Traniee at FunctionUp[Plutonium 05]
 ---------------------------
 ![](https://komarev.com/ghpvc/?username=priyankasstark&label=Profile%20views&color=0e75b6&style=flat) \
 On a way to be a Full stack developer/Sde traniee and I'm very passionate about coding because it makes me work hard and do well in my life.
