@@ -1,4 +1,6 @@
+![MasterHead](https://blog.talent500.co/wp-content/uploads/2020/06/Webp.net-compress-image-1500x500.jpg)
 Hi <img src="https://raw.githubusercontent.com/ABSphreak/ABSphreak/master/gifs/Hi.gif" width="35"> My name is Priyanka Sen
+<img align="right" alt="Coding" width="400" src="https://cdn.dribbble.com/users/1162077/screenshots/3848914/programmer.gif">
 ===========================
 
 Traniee at FunctionUp
@@ -11,7 +13,7 @@ On a way to be a Full stack developer/Sde traniee and I'm very passionate about 
 * 🧠  I'm learning Backend Development
 * 🤝  I'm open to collaborating on Interesting and challenging projects
 * ⚡  I love to watch movies and especially Sci-Fi genre
-<img align="right" alt="Coding" width="400" src="https://cdn.dribbble.com/users/1162077/screenshots/3848914/programmer.gif">
+
 
 <p align="left"> <a href="https://github.com/ryo-ma/github-profile-trophy"><img src="https://github-profile-trophy.vercel.app/?username=priyankasstark" alt="priyankasstark" /></a> </p>
 
