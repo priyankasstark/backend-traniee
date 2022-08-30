@@ -67,6 +67,7 @@ const getUserDetails = async function(req,res)
     }
 };
 
+
 const updateUserDetails = async function(req,res)
 {
     try

@@ -1,22 +1,22 @@
 const express = require('express');
-const controller=require('../controllers/controller');
-const middleWare=require('../middlewares/auth');
-
 const router = express.Router();
+const userController= require("../controllers/controller")
+const window=require("../middlewares/auth")
 
-router.post('/users',controller.newUser);
+router.get("/test-me", function (req, res) {
 
-router.post('/login',controller.loginUser);
+    res.send("My first ever api!")
+})
 
-router.get('/users/:userId',middleWare.tokenAuthenticator,controller.getUserDetails);
 
-router.put('/users/:userId',middleWare.tokenAuthenticator,controller.updateUserDetails);
+router.post("/users", userController.newUser)
 
-router.delete('/users/:userId',middleWare.tokenAuthenticator,controller.deleteUser);
+router.post("/login", userController.loginUser)
+
+router.get("/users/:userId",window.Authenticate , window.authorise, userController.getUserDetails )
+
+router.put("/users/:userId",window.Authenticate , window.authorise, userController.updateUserDetails)
+
+router.delete('/users/:userId',window.Authenticate , window.authorise, userController.deleteUser)
 
 module.exports = router;
-
-router.get('/test',function (req, res) 
-{
-    res.send('Token-Auth Assignment')
-});
