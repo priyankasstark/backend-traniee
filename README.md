@@ -1,5 +1,3 @@
-# uranium
-Backend cohort March 2022 - June 2022
 
 # TRY CATCH SUMMARY:
 // if you get an error in try block, it will not execute the next lines of code inside try
