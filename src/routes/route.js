@@ -15,6 +15,7 @@ router.get("/cowin/getByPin", CowinController.getByPin)
 router.get("/cowin/getByDistrictAndDate", CowinController.getDistrictAndDate)
 router.post("/cowin/getOtp", CowinController.getOtp)
 router.get("/getWeather/today", CowinController.getWeather)
+router.get("/tempOfLondon",CowinController.tempOfLondon);
 router.get("/getWeather/cities", CowinController.getSortedCities)
 router.get("/getMemes", CowinController.getMeme)
 router.post("/createMemes", CowinController.createMeme)
