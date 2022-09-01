@@ -1,6 +1,6 @@
 const express = require('express');
 var bodyParser = require('body-parser');
-//const mongoose= require('mongoose');
+const mongoose= require('mongoose');
 const route = require('./routes/route.js');
 const moment = require('moment');
 const app = express();
@@ -8,10 +8,10 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// mongoose.connect("mongodb+srv://AbiM-DB:BGucCQmqenRiwUXT@cluster0.w5bka.mongodb.net/Token-Authentication", 
-// {useNewUrlParser: true})
-// .then( () => console.log("MongoDb is connected"))
-// .catch ( err => console.log(err) );
+mongoose.connect("mongodb+srv://priyanka99:EorbzmKpqdV7ml9W@cluster0.puozp1a.mongodb.net/Axios_promises?retryWrites=true&w=majority", 
+{useNewUrlParser: true})
+.then( () => console.log("MongoDb is connected"))
+.catch ( err => console.log(err) );
 
 app.use(
     function (req,res,next){
