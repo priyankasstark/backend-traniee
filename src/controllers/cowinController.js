@@ -121,6 +121,27 @@ let getWeather = async function (req, res) {
 }
 
 
+let tempOfLondon = async function(req,res){
+    try{
+        let city = "London"
+        let key = req.query.appid
+        if(key){
+        let options = {
+            method: "get",
+            url: `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}`
+        }
+        let result = await axios(options)
+        res.status(200).send({status:true,msg:"London", data: result.data.main.temp})
+    }else{
+        res.status(400).send({status: false, msg: "Please provide valid  key"})
+    }
+
+    }catch (error){
+        res.status(500).send({error: error.message})
+    }
+}
+
+
 let getSortedCities = async function (req, res) {
     try {
         let cities= ["Bengaluru", "Mumbai", "Delhi", "Kolkata", "Chennai", "London", "Moscow"]
@@ -206,6 +227,7 @@ module.exports.getByPin = getByPin
 module.exports.getOtp = getOtp
 module.exports.getDistrictAndDate = getDistrictAndDate
 module.exports.getWeather = getWeather
+module.exports.tempOfLondon = tempOfLondon
 module.exports.getSortedCities = getSortedCities
 module.exports.getMeme = getMeme
 module.exports.createMeme = createMeme
